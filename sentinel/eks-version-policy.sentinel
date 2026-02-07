@@ -1,1 +1,17 @@
+import "tfplan/v2" as tfplan
+
+allowed_versions = [
+  "1.32",
+  "1.33",
+  "1.34",
+  "1.35"
+]
+
+eks_clusters = tfplan.resource_changes["aws_eks_cluster"]
+
+main = rule {
+  all eks_clusters as _, cluster {
+    cluster.change.after.version in allowed_versions
+  }
+}
 
